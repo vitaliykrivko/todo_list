@@ -1,0 +1,7 @@
+%h1 
+  New task
+  ="for story #{params[:story]}" if params[:story]
+
+= render 'form'
+
+= link_to 'Back', :back, :class => 'btn info'

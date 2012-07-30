@@ -1,0 +1,37 @@
+.sidebar
+  .page-header
+    %h3= @project.name
+    %h2= @project.description
+    %p
+      %b
+        Owner:
+      =User.find_by_id(@project.owner_id).email
+    %br
+    %p
+      %b
+        %span.label.warning=@project.users.count 
+        Users
+        %ul
+          - @project.users do |user|
+            %li=user.email
+      %b
+        %span.label.important=@project.stories.count 
+        Stories
+        %ul
+          - @project.stories do |story|
+            %li
+              %span.label.success=story.tasks.count
+              =story.title
+    %p 
+      - if @project.owner == current_user
+        = link_to edit_project_path(@project), :class => 'button' do
+          %span.icon.icon145{:title => 'Edit Project'}
+        = link_to @project, :confirm => 'Are you sure?', :method => :delete, :class => 'button' do
+          %span.icon.icon56{:title => 'Delete Project'}
+    %br
+    %br
+  = render 'invite'
+  = render :partial => 'stories/add_story'
+  %hr
+  = render 'tasks/assingned'
+  = render 'tasks/todo'
